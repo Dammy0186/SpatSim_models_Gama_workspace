@@ -1,8 +1,8 @@
 /**
 * Name: savannah_ai
 * Author: Administrator
-* Description: Savannah model with grassland cellular automaton and zebra agents.
-* Tags: cellular_automaton, grid, grassland, zebras
+* Description: Savannah model with grassland cellular automaton, zebra agents, and lion predators.
+* Tags: cellular_automaton, grid, grassland, zebras, lions
 */
 model savannah_ai
 
@@ -12,6 +12,29 @@ global {
 	init {
 		// Create 20 initial zebra agents
 		create zebras number: 20;
+		// Create 20 initial lion agents
+		create lions number: 20;
+	}
+}
+
+// Species representing lions that prey on zebras in the savannah
+species lions skills: [moving] {
+
+	// Reflex enabling lions to walk around randomly
+	reflex move {
+		do wander;
+	}
+
+	// Reflex to encounter nearby zebras and kill them using the die action
+	reflex hunt {
+		ask zebras at_distance 5 {
+			do die;
+		}
+	}
+
+	// Default visual aspect displaying lions as orange circles of size 3
+	aspect default {
+		draw circle(3) color: #orange;
 	}
 }
 
@@ -57,10 +80,11 @@ experiment main_experiment type: gui {
 
 	// Output block containing visualization displays
 	output {
-		// Visual display showing the grassland CA grid and zebra agents
+		// Visual display showing the grassland CA grid, zebras, and lions
 		display savannah_display {
 			grid grassland;
 			species zebras aspect: default;
+			species lions aspect: default;
 		}
 	}
 }
