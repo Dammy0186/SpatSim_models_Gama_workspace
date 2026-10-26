@@ -20,15 +20,23 @@ global {
 // Species representing lions that prey on zebras in the savannah
 species lions skills: [moving] {
 
-	// Reflex enabling lions to walk around randomly
+	// Attribute representing lion energy, initialized at 25.0 with a maximum capacity of 50.0
+	float energy <- 25.0 max: 50.0;
+
+	// Reflex enabling lions to walk around randomly with a turning amplitude of 60 degrees, losing 0.15 energy per step
 	reflex move {
-		do wander;
+		do wander amplitude: 60.0;
+		energy <- energy - 0.15;
 	}
 
-	// Reflex to encounter nearby zebras and kill them using the die action
+	// Reflex to hunt a nearby zebra, kill it using the die action, and gain 10.0 energy (capped at max energy of 50.0)
 	reflex hunt {
-		ask zebras at_distance 5 {
-			do die;
+		zebras target <- one_of(zebras at_distance 5);
+		if (target != nil) {
+			ask target {
+				do die;
+			}
+			energy <- min([energy + 10.0, 50.0]);
 		}
 	}
 
