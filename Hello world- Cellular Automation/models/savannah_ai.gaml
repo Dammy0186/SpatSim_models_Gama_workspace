@@ -41,9 +41,29 @@ species lions skills: [moving] {
 // Species representing zebras that wander across the savannah
 species zebras skills: [moving] {
 
-	// Reflex enabling zebras to walk around randomly
+	// Attribute representing zebra energy, initialized at 10.0 with a maximum capacity of 20.0
+	float energy <- 10.0 max: 20.0;
+
+	// Reflex enabling zebras to walk around randomly, consuming 0.2 energy per step
 	reflex move {
 		do wander;
+		energy <- energy - 0.2;
+	}
+
+	// Reflex for zebras to graze on their current grassland cell, gaining energy and depleting biomass
+	reflex graze {
+		grassland current_cell <- grassland(location);
+		if (current_cell != nil) {
+			energy <- min([energy + current_cell.biomass, 20.0]);
+			current_cell.biomass <- 0.0;
+		}
+	}
+
+	// Reflex checking if energy has reached 0 or below, triggering death
+	reflex check_energy {
+		if (energy <= 0.0) {
+			do die;
+		}
 	}
 
 	// Default visual aspect displaying zebras as grey triangles of size 2
