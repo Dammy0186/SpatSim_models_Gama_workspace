@@ -1,13 +1,32 @@
 /**
 * Name: savannah_ai
 * Author: Administrator
-* Description: Grassland Cellular Automaton model where each cell starts with random biomass (0–10 kg), grows by 0.1 kg per cycle, and is visually displayed.
-* Tags: cellular_automaton, grid, grassland
+* Description: Savannah model with grassland cellular automaton and zebra agents.
+* Tags: cellular_automaton, grid, grassland, zebras
 */
 model savannah_ai
 
-// Global section defining simulation environment parameters
+// Global section defining simulation environment parameters and agent initialization
 global {
+	// Initialization block creating initial simulation agents
+	init {
+		// Create 20 initial zebra agents
+		create zebras number: 20;
+	}
+}
+
+// Species representing zebras that wander across the savannah
+species zebras skills: [moving] {
+
+	// Reflex enabling zebras to walk around randomly
+	reflex move {
+		do wander;
+	}
+
+	// Default visual aspect displaying zebras as grey triangles of size 2
+	aspect default {
+		draw triangle(2) color: #gray;
+	}
 }
 
 // Grid species representing the grassland cellular automaton
@@ -38,9 +57,10 @@ experiment main_experiment type: gui {
 
 	// Output block containing visualization displays
 	output {
-		// Visual display showing the grassland CA grid
+		// Visual display showing the grassland CA grid and zebra agents
 		display savannah_display {
 			grid grassland;
+			species zebras aspect: default;
 		}
 	}
 }
