@@ -8,17 +8,26 @@ model savannah_ai
 
 // Global section defining simulation environment parameters and agent initialization
 global {
+
+	// List of ages of all lions present in the simulation
+	list<int> lion_ages <- [];
+
 	// Initialization block creating initial simulation agents
 	init {
 		// Create 20 initial zebra agents
 		create zebras number: 20;
 		// Create 20 initial lion agents
 		create lions number: 20;
+		// Populate lion_ages with the age of each created lion
+		lion_ages <- lions collect each.age;
 	}
 }
 
 // Species representing lions that prey on zebras in the savannah
 species lions skills: [moving] {
+
+	// Attribute representing the lion's age, initialized randomly up to 50
+	int age <- rnd(50);
 
 	// Attribute representing lion energy, initialized at 25.0 with a maximum capacity of 50.0
 	float energy <- 25.0 max: 50.0;
