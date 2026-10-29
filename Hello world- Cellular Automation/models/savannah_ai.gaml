@@ -49,6 +49,13 @@ species lions skills: [moving] {
 		}
 	}
 
+	// Reflex enabling lions to age each cycle, incrementing age by 1 and updating the global lion_ages list
+	reflex aging {
+		remove item: age from: lion_ages;
+		age <- age + 1;
+		add item: age to: lion_ages;
+	}
+
 	// Default visual aspect displaying lions as orange circles of size 3
 	aspect default {
 		draw circle(3) color: #orange;
