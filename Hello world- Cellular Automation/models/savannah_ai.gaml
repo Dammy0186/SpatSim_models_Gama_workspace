@@ -61,9 +61,9 @@ species lions skills: [moving] {
 		add item: age to: lion_ages;
 	}
 
-	// Default visual aspect displaying lions as orange circles of size 3
+	// Default visual aspect displaying lions as circles of size 3 in different shades of red depending on whether age is above or below the population mean
 	aspect default {
-		draw circle(3) color: #orange;
+		draw circle(3) color: (age >= mean(lion_ages)) ? #darkred : #red;
 	}
 }
 
