@@ -21,6 +21,11 @@ global {
 		// Populate lion_ages with the age of each created lion
 		lion_ages <- lions collect each.age;
 	}
+
+	// Reflex logging lion age statistics (count, min, mean, max) to the console each time step
+	reflex report_lion_ages {
+		write "Lion count: " + length(lion_ages) + ", Min age: " + min(lion_ages) + ", Mean age: " + mean(lion_ages) + ", Max age: " + max(lion_ages);
+	}
 }
 
 // Species representing lions that prey on zebras in the savannah
