@@ -61,6 +61,16 @@ species lions skills: [moving] {
 		add item: age to: lion_ages;
 	}
 
+	// Reflex checking lion mortality when age exceeds 60, giving birth to a replacement baby lion and removing the dying lion
+	reflex check_mortality {
+		if (age > 60) {
+			create lions number: 1 with: [age::0];
+			add item: 0 to: lion_ages;
+			remove item: age from: lion_ages;
+			do die;
+		}
+	}
+
 	// Default visual aspect displaying lions as circles of size 3 in different shades of red depending on whether age is above or below the population mean
 	aspect default {
 		draw circle(3) color: (age >= mean(lion_ages)) ? #darkred : #red;
