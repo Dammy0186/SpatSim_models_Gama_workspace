@@ -71,9 +71,11 @@ species lions skills: [moving] {
 		}
 	}
 
-	// Default visual aspect displaying lions as circles of size 3 in different shades of red depending on whether age is above or below the population mean
+	// Default visual aspect displaying all lions with the same shade of red dynamically calculated from the population mean age
 	aspect default {
-		draw circle(3) color: (age >= mean(lion_ages)) ? #darkred : #red;
+		float avg_age <- empty(lion_ages) ? 0.0 : mean(lion_ages);
+		rgb lion_color <- rgb(int(255 - min([155, int(avg_age * 2.5)])), 0, 0);
+		draw circle(3) color: lion_color;
 	}
 }
 
