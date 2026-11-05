@@ -1,7 +1,7 @@
 /**
 * Name: movementandactionneighbourhoodsl
 * Author: Administrator
-* Description: Scaffold for Model 2 simulating spatial action neighbourhoods for cows, sheep, and goats.
+* Description: Model 2 simulating spatial action neighbourhoods for cows, sheep, and goats.
 * Tags: movement, action_neighbourhoods, spatial_action
 */
 model movementandactionneighbourhoodsl
@@ -29,9 +29,14 @@ species cows skills: [moving] {
 	// Attribute representing the spatial action area geometry of the cow
 	geometry action_area;
 
-	// Default aspect rendering the brown cow agent geometry
+	// Reflex enabling cows to move via correlated random walk with a 90 degree turning amplitude
+	reflex move {
+		do wander amplitude: 90.0 speed: 2.0;
+	}
+
+	// Default aspect rendering the saddlebrown cow agent geometry
 	aspect default {
-		draw circle(1.0) color: #brown;
+		draw circle(2) color: #saddlebrown;
 	}
 
 	// Action area aspect rendering the action_area geometry drawn in #goldenrod with 0.5 transparency
@@ -51,9 +56,15 @@ species sheep skills: [moving] {
 	// Attribute representing the spatial action area geometry of the sheep
 	geometry action_area;
 
+	// Reflex enabling sheep to set heading to 90 degrees (South) and move forward
+	reflex move {
+		heading <- 90.0;
+		do move speed: 1.0;
+	}
+
 	// Default aspect rendering the black sheep agent geometry
 	aspect default {
-		draw circle(1.0) color: #black;
+		draw circle(1.5) color: #black;
 	}
 
 	// Action area aspect rendering the action_area geometry drawn in #goldenrod with 0.5 transparency
@@ -73,9 +84,14 @@ species goats skills: [moving] {
 	// Attribute representing the spatial action area geometry of the goat
 	geometry action_area;
 
+	// Reflex enabling goats to move towards the origin target {0,0}
+	reflex move {
+		do goto target: {0,0} speed: 0.5;
+	}
+
 	// Default aspect rendering the yellow goat agent geometry
 	aspect default {
-		draw circle(1.0) color: #yellow;
+		draw circle(1) color: #yellow;
 	}
 
 	// Action area aspect rendering the action_area geometry drawn in #goldenrod with 0.5 transparency
