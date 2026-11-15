@@ -193,8 +193,9 @@ experiment main_experiment type: gui {
 		}
 
 		display "Step 1 Scatterplot" type: 2d {
-			chart "Sheep vs. Cows First Step Avg Distance" type: scatter {
-				data "Step 1 Avg Distance" value: [first_step_sheep_dist, first_step_cows_dist] color: #blue;
+			chart "Sheep vs. Cows First Step Avg Distance" type: scatter x_label: "Species (1=Sheep, 2=Cows)" y_label: "Avg Distance" {
+				data "Sheep" value: [1.0, first_step_sheep_dist] color: #black;
+				data "Cows" value: [2.0, first_step_cows_dist] color: #saddlebrown;
 			}
 		}
 
